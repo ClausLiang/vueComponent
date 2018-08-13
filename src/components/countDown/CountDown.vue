@@ -40,6 +40,9 @@ export default {
   },
   methods: {
     setCountDown () {
+      if (this.differ < 0){
+        return false
+      }
       const hour = parseInt(this.differ / (60 * 60 * 1000)) // 先算有多少小时
       if (hour > 99) {
         this.countInfo.hour0 = parseInt(hour / 100)
