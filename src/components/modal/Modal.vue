@@ -31,11 +31,11 @@ export default {
     top: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.5);
-    padding: 0 53px;
     .modal-wrapper{
       position: absolute;
       top: 50%;
-      transform: translateY(-50%);
+      left: 50%;
+      transform: translate(-50%, -50%);
       width: 270px;
       height: auto;
       background: #fff;
