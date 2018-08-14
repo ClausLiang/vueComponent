@@ -5,19 +5,32 @@
     </div>
     <button class="toast-btn" @click="showModal">modal</button>
     <Modal ref="modal" content="您还未参与线下预约，请联系案场专员。"></Modal>
+    <!--下拉框组件-->
+    <div class="select-wrapper">
+      <SelectComp :optionList="optionList" class="selectItem"></SelectComp>
+      <SelectComp :optionList="optionList" class="selectItem"></SelectComp>
+      <SelectComp :optionList="optionList" class="selectItem"></SelectComp>
+    </div>
+    fafafaf
   </div>
 </template>
 
 <script>
 import Modal from './modal/Modal'
 import CountDown from './countDown/CountDown'
+import SelectComp from './select/selectComp'
 export default {
   name: 'index',
-  components: {Modal, CountDown},
+  components: {Modal, CountDown, SelectComp},
   data () {
     return {
       startTime: '',
-      endTime: ''
+      endTime: '',
+      optionList: [
+        {value: 1, label: '选项1'},
+        {value: 2, label: '选项2'},
+        {value: 3, label: '选项3'}
+      ]
     }
   },
   created () {
@@ -44,6 +57,12 @@ export default {
     .count-wrapper{
       margin: 10px;
       display: inline-block;
+    }
+    .select-wrapper{
+      display: flex;
+      .selectItem{
+        flex: 1;
+      }
     }
   }
 </style>
