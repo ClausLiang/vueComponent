@@ -35,7 +35,7 @@ export default {
   },
   created () {
     this.startTime = new Date('2018-08-13 00:00:00')
-    this.endTime = new Date('2018-08-13 07:22:24')
+    this.endTime = new Date('2018-08-13 00:00:10')
   },
   methods: {
     showModal () {
@@ -56,7 +56,6 @@ export default {
     }
     .count-wrapper{
       margin: 10px;
-      display: inline-block;
     }
     .select-wrapper{
       display: flex;

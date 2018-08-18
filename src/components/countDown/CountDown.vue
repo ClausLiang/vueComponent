@@ -33,9 +33,13 @@ export default {
   mounted () {
     this.differ = this.endTime - this.startTime
     this.setCountDown(this.differ)
-    setInterval(() => {
+    var timer = setInterval(() => {
       this.differ = this.differ - 1000
       this.setCountDown()
+      console.log(1)
+      if (this.differ <= 0) {
+        clearInterval(timer)
+      }
     }, 1000)
   },
   methods: {
