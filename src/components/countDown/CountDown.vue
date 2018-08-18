@@ -81,6 +81,7 @@ export default {
 <style scoped lang="stylus">
   .count-down{
     display: flex;
+    justify-content: center;
     span{
       display: inline-block;
       margin-right: 6px;
@@ -97,6 +98,7 @@ export default {
       }
     }
     em{
+      display: inline-block;
       margin-right: 6px;
       line-height: 24px;
       font-size: 15px;

@@ -56,6 +56,9 @@ export default {
     }
     .count-wrapper{
       margin: 10px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
     }
     .select-wrapper{
       display: flex;
