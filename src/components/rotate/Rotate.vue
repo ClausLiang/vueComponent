@@ -36,61 +36,73 @@
         insideRadius: 68,			// 大转盘内圆的半径
         startAngle: 0,				// 开始角度
         bRotate: false,			  // false:停止;ture:旋转
-        remainTime: 0
+        remainTime: 0,
+        imgs: [],
       }
+    },
+    created () {
+      this.restaraunts.forEach(item => {
+        var img = new Image()
+        img.src = item.img
+        this.imgs.push(img)
+      })
     },
     mounted () {
-      var canvas = document.getElementById("wheelcanvas")
-      if (canvas.getContext) {
-        // 根据奖品个数计算圆周角度
-        var arc = Math.PI / (this.restaraunts.length / 2)
-        var ctx = canvas.getContext("2d")
-        // 在给定矩形内清空一个矩形
-        ctx.clearRect(0,0,422,422)
-        // strokeStyle 属性设置或返回用于笔触的颜色、渐变或模式
-        ctx.strokeStyle = "#F4F4FE"
-        // font 属性设置或返回画布上文本内容的当前字体属性
-        ctx.font = '16px Microsoft YaHei'
-        for(var i = 0; i < this.restaraunts.length; i++) {
-          var angle = this.startAngle + i * arc
-          ctx.fillStyle = this.colors[i]
-          ctx.beginPath()
-          // arc(x,y,r,起始角,结束角,绘制方向) 方法创建弧/曲线（用于创建圆或部分圆）
-          ctx.arc(211, 211, this.outsideRadius, angle, angle + arc, false)
-          ctx.arc(211, 211, this.insideRadius, angle + arc, angle, true)
-          ctx.stroke()
-          ctx.fill()
-          // 锁画布(为了保存之前的画布状态)
-          ctx.save()
+      setTimeout(() => {
+        this.initial()
+      }, 100)
 
-          // ----绘制奖品开始----
-          ctx.fillStyle = "#0d0728"
-          // translate方法重新映射画布上的 (0,0) 位置
-          ctx.translate(211 + Math.cos(angle + arc / 2) * this.textRadius, 211 + Math.sin(angle + arc / 2) * this.textRadius)
-
-          // rotate方法旋转当前的绘图
-          ctx.rotate(angle + arc / 2 + Math.PI / 2)
-
-          /** 下面代码根据奖品类型、奖品名称长度渲染不同效果，如字体、颜色、图片效果。(具体根据实际情况改变) **/
-          var text = this.restaraunts[i].title
-          var subTitle = this.restaraunts[i].subTitle
-          // measureText()方法返回包含一个对象，该对象包含以像素计的指定字体宽度
-          ctx.font = '20px Microsoft YaHei'
-          ctx.fillText(text, -ctx.measureText(text).width / 2, 0)
-          ctx.font = '16px Microsoft YaHei'
-          ctx.fillText(subTitle, -ctx.measureText(subTitle).width / 2, 20)
-
-          // 添加对应图标
-          var img = new Image()
-          img.src = this.restaraunts[i].img
-          ctx.drawImage(img, -40, 30, 80, 50)
-          // 把当前画布返回（调整）到上一个save()状态之前
-          ctx.restore();
-          // ----绘制奖品结束----
-        }
-      }
     },
     methods: {
+      initial () {
+        var canvas = document.getElementById("wheelcanvas")
+        if (canvas.getContext) {
+          // 根据奖品个数计算圆周角度
+          var arc = Math.PI / (this.restaraunts.length / 2)
+          var ctx = canvas.getContext("2d")
+          // 在给定矩形内清空一个矩形
+          ctx.clearRect(0,0,422,422)
+          // strokeStyle 属性设置或返回用于笔触的颜色、渐变或模式
+          ctx.strokeStyle = "#F4F4FE"
+
+          for(var i = 0; i < this.restaraunts.length; i++) {
+            var angle = this.startAngle + i * arc
+            ctx.fillStyle = this.colors[i]
+            ctx.beginPath()
+            // arc(x,y,r,起始角,结束角,绘制方向) 方法创建弧/曲线（用于创建圆或部分圆）
+            ctx.arc(211, 211, this.outsideRadius, angle, angle + arc, false)
+            ctx.arc(211, 211, this.insideRadius, angle + arc, angle, true)
+            ctx.stroke()
+            ctx.fill()
+            // 锁画布(为了保存之前的画布状态)
+            ctx.save()
+
+            // ----绘制奖品开始----
+            ctx.fillStyle = "#0d0728"
+            // translate方法重新映射画布上的 (0,0) 位置
+            ctx.translate(211 + Math.cos(angle + arc / 2) * this.textRadius, 211 + Math.sin(angle + arc / 2) * this.textRadius)
+
+            // rotate方法旋转当前的绘图
+            ctx.rotate(angle + arc / 2 + Math.PI / 2)
+
+            /** 下面代码根据奖品类型、奖品名称长度渲染不同效果，如字体、颜色、图片效果。(具体根据实际情况改变) **/
+            var text = this.restaraunts[i].title
+            var subTitle = this.restaraunts[i].subTitle
+            // font 属性设置或返回画布上文本内容的当前字体属性
+            ctx.font = '20px Microsoft YaHei'
+            // measureText()方法返回包含一个对象，该对象包含以像素计的指定字体宽度
+            ctx.fillText(text, -ctx.measureText(text).width / 2, 0)
+            ctx.font = '16px Microsoft YaHei'
+            ctx.fillText(subTitle, -ctx.measureText(subTitle).width / 2, 20)
+
+            // 添加对应图标
+            ctx.drawImage(this.imgs[i], -40, 30, 80, 50)
+            // 把当前画布返回（调整）到上一个save()状态之前
+            ctx.restore();
+            // ----绘制奖品结束----
+          }
+        }
+      },
       turnHandle () {
         if(this.bRotate){
           return
@@ -133,7 +145,7 @@
       height: 32px;
       line-height: 32px;
       right: 0;
-      top: 286px;
+      top: 260px;
       border-top-left-radius: 16px;
       border-bottom-left-radius: 16px;
       background: rgba(255, 255, 255, 0.7);
@@ -148,7 +160,7 @@
     }
     .turnplate{
       width: 90%;
-      margin: 400px auto auto;
+      margin: 380px auto auto;
       background-image: url('./img/bg.png');
       background-size: 100% 100%;
       position:relative;
