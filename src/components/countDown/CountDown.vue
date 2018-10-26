@@ -36,7 +36,6 @@ export default {
     var timer = setInterval(() => {
       this.differ = this.differ - 1000
       this.setCountDown()
-      console.log(1)
       if (this.differ <= 0) {
         clearInterval(timer)
       }

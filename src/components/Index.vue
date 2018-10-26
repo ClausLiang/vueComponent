@@ -1,6 +1,6 @@
 <template>
   <div class="index-wrapper">
-    <div class="count-wrapper">
+    <div :class="fix ? 'count-wrapper fixC' : 'count-wrapper'">
       <CountDown :startTime="startTime" :endTime="endTime"></CountDown>
     </div>
     <button class="toast-btn" @click="showModal">modal</button>
@@ -30,12 +30,32 @@ export default {
         {value: 1, label: '选项1'},
         {value: 2, label: '选项2'},
         {value: 3, label: '选项3'}
-      ]
+      ],
+      fix: false
     }
   },
   created () {
     this.startTime = new Date('2018-08-13 00:00:00')
     this.endTime = new Date('2018-08-13 00:00:10')
+  },
+  mounted () {
+    const _this = this
+    window.addEventListener('scroll', function () {
+      let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+      if (scrollTop > 66) {
+        _this.fix = true
+      } else {
+        _this.fix = false
+      }
+      // 可视窗口高度
+      let windowHeight = document.body.clientHeight || document.documentElement.clientHeight
+      // scrollHeight
+      let scrollHeight = document.body.scrollHeight || document.documentElement.scrollHeight
+
+      if (scrollHeight === windowHeight + scrollTop) {
+        alert('到底了')
+      }
+    })
   },
   methods: {
     showModal () {
@@ -47,7 +67,7 @@ export default {
 
 <style scoped lang="stylus">
   .index-wrapper{
-    height: 100%;
+    height: 1000px;
     .toast-btn{
       width: 50px;
       height: 25px;
@@ -59,6 +79,10 @@ export default {
       border: 1px solid #ccc;
       border-radius: 10px;
       padding: 20px;
+    }
+    .fixC {
+      position: fixed;
+      top: 0;
     }
     .select-wrapper{
       display: flex;
